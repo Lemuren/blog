@@ -1,0 +1,43 @@
+---
+title: "Unhooking From the Algorithm"
+date: 2023-09-14T23:16:41+02:00
+draft: false
+---
+
+A few years ago I got in the habit of writing custom stylesheets for websites I used often.
+I still think this is a good idea, but the better idea is simply to use the internet less.
+A little while ago I remembered the existence of these types of custom CSS extensions, and decided to use one to tackle a problem I had.
+
+I find myself sometimes falling into the fabled "YouTube rabbithole".
+What starts out as me earnestly wanting to watch a guide, or a single new video of a channel I follow, very often turned into me following the "recommended videos" next to the one I was watching.
+This turned what should've been a quick 15--20 minutes into sometimes hours of wasted time.
+
+I decided to install an RSS reader, which is a significant step to unhooking yourself from the algorithm.
+This still had the problem of when I chose to visit the websites, instead of reading the content in my RSS reader, the respective site's algorithm immediately began its work of sinking its claws into me.
+Thus, I installed "Stylus", which is a custom stylesheet extension for Firefox.
+
+I used it to hide all "recommended videos" nonsense on YouTube.
+Now when I watch a video, that's all there is.
+There is no "Up next", no "Related videos", no "You might like...".
+The obvious benefit is two-fold:
+
+    1. I no longer need to use my willpower. Instead, the stylesheet stops me from even seeing temptation.
+    2. I waste much less time on YouTube.
+
+From all this it might sound like I'm some hopeless YouTube addict.
+I don't think I am, at least not any more than most people are addicted to some form of "content".
+In truth, I think we're all a little bit too addicted to consuming content these days.
+Your poison might be Twitter, or Instagram or, heaven forbid, TikTok.
+Unfortunately these are all smartphone apps (at least, that's the major way they're used).
+Here my recommendation is simply to get rid of, and if that is not possible, cut your smartphone use to an absolute minimum.
+
+For those of you whose content addiction is still accessed through a desktop browser, however, I think this remedy might be of use.
+I know it has been helpful for me.
+
+Minimizing content consumption can also be done by, as mentioned above, subscribing to RSS feeds.
+There's probably upwards of hundreds of RSS readers, but I recommend using one that is terminal-based.
+The benefits of using an RSS reader includes: not being steered by an algorithm designed to keep you maximally engaged and waste as much time as possible, no censoring or filtering of content, and the ability to gather disparate sources of (often, much higher quality) content into one place.
+
+Setting up an RSS reader is dead-simple.
+Pick your favorite one (I recommend Newsboat) and start adding feeds to it.
+Soon, *you* will be the one who decides what content you consume, and when, not the algorithm.

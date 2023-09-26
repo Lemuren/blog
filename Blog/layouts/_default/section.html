@@ -1,0 +1,12 @@
+{{ partial "head" . }}
+{{ partial "header" . }}
+
+<div class="content">
+<h1>{{ .Title }}</h1>
+
+<ul>
+    {{ range .Pages }}
+    <li><span class="date">{{ .Date.Format "'06, Jan 2" }}</span> – <a href="{{ .Permalink }}">{{ .Title }}</a></li>
+    {{ end }}
+</ul>
+</div>

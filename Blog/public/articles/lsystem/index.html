@@ -1,0 +1,309 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+
+    
+        <title>L-systems</title>
+    
+</head>
+
+<div id="navbar">
+    <ul>
+        <li><a href="http://localhost:1313/">Home</a></li>
+        <li><a href="/articles/">Articles</a></li>
+        <li><a href="/posts/">Posts</a></li>
+    </ul>
+</div>
+
+
+<div class="content">
+    <div class="title-div">
+        <h1 class="article-header">L-systems</h1>
+    </div>
+
+    <p>An L-system (Lindenmeyer system) is a parallel rewriting system.
+We decide on an alphabet $V$, set of rewriting rules $P$, and a starting axiom $\omega$.
+Starting from the axiom we apply all rules simultaneously, rewriting the string, and producing the next iteration.
+This then repeats.</p>
+<p>For instance, if $V = { A, B }$, $\omega = { B }$, and $P = { A \to AA, B \to BA }$, then the first couple of iterations will look like:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Iteration</th>
+<th style="text-align:left">String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:left">A</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:left">BA</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:left">BAAA</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:left">BAAAAAAA</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that every rule gets applied at the same time.
+At the moment, we&rsquo;ll only consider rules that do not conflict, meaning, for every character there is only at most one rule that applies.</p>
+<p>L-systems are very good at modelling self-similar structures, for example fractals and plants.
+Before we get to the exciting bits, let&rsquo;s create a function that takes an L-system and a positive integer $n$, and returns the $n$th generation.
+To keep things simple, we&rsquo;ll let the alphabet be implied by the rules and axiom.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">lsystem</span>(axiom: str, rules: dict[str, str], iters: int) <span style="color:#f92672">-&gt;</span> str:
+    <span style="color:#66d9ef">if</span> (iters <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>):
+        <span style="color:#66d9ef">return</span> axiom
+    <span style="color:#66d9ef">else</span>:
+        <span style="color:#66d9ef">return</span> lsystem(<span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(map(<span style="color:#66d9ef">lambda</span> c: rules[c], axiom)), rules, iters<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</code></pre></div><p>Try this function out and make sure it reproduces the output given in the table above.</p>
+<p>The most popular way of interpreting L-system strings is graphical.
+To do this, we&rsquo;ll use the Turtle graphics library.
+A Turtle is exactly that, a little turtle holding a pen.
+The turtle can move forwards, backwards, turn left and right, as well as put his pen down or lift it up.
+When the pen is down, the turtle draws as he moves.
+If the pen is up the turtle can move without drawing.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> turtle <span style="color:#66d9ef">as</span> t
+
+t<span style="color:#f92672">.</span>fd(<span style="color:#ae81ff">100</span>)
+input()
+</code></pre></div><p>Try running this code.
+You should see a white canvas with a black line being drawn.
+The <code>input()</code> at the end is to make sure the window doesn&rsquo;t immediately close as soon as the turtle is done drawing.
+The line <code>t.fd(100)</code> tells the turtle to move forward 100 pixels.
+What do you think the following code does?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">t<span style="color:#f92672">.</span>fd(<span style="color:#ae81ff">100</span>)
+t<span style="color:#f92672">.</span>seth(<span style="color:#ae81ff">90</span>)
+t<span style="color:#f92672">.</span>fd(<span style="color:#ae81ff">50</span>)
+input()
+</code></pre></div><p>The most mystifying part is <code>t.seth(90)</code>.
+This sets the turtle&rsquo;s heading (i.e. angle) to 90 degrees (which corresponds to &ldquo;up&rdquo; or &ldquo;north&rdquo;).
+Try running it and see if your guess was correct.</p>
+<p>The idea now is to interpret the string produced by our L-system as commands for the turtle.
+There&rsquo;s a few commands we&rsquo;ll consider:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Symbol</th>
+<th style="text-align:left">Instruction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">F</td>
+<td style="text-align:left">Move forward.</td>
+</tr>
+<tr>
+<td style="text-align:left">+</td>
+<td style="text-align:left">Turn right.</td>
+</tr>
+<tr>
+<td style="text-align:left">-</td>
+<td style="text-align:left">Turn left.</td>
+</tr>
+<tr>
+<td style="text-align:left">[</td>
+<td style="text-align:left">Save current position and heading.</td>
+</tr>
+<tr>
+<td style="text-align:left">]</td>
+<td style="text-align:left">Return to last saved position and heading (without drawing).</td>
+</tr>
+<tr>
+<td style="text-align:left">X</td>
+<td style="text-align:left">Do nothing.</td>
+</tr>
+</tbody>
+</table>
+<p>The exact amount of pixels we&rsquo;ll move forward and angle to turn by will be defined in constants ahead of time.
+The &ldquo;X&rdquo; symbol is used only for generating the L-system string, it has no effect on the turtle.
+Finally, the &ldquo;[&rdquo; and &ldquo;]&rdquo; symbols allow us to draw substructures by saving, and later returning to, our position.</p>
+<p>Let&rsquo;s implement a function to interpret an L-system string.
+First we&rsquo;ll define a Stack class to handle the saving and returning of our position.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Generic, TypeVar
+
+T <span style="color:#f92672">=</span> TypeVar(<span style="color:#e6db74">&#39;T&#39;</span>)
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Stack</span>(Generic[T]):
+    <span style="color:#66d9ef">def</span> __init__(self) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+        self<span style="color:#f92672">.</span>_container: list[T] <span style="color:#f92672">=</span> []
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">push</span>(self, t: T) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+        self<span style="color:#f92672">.</span>_container<span style="color:#f92672">.</span>append(t)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pop</span>(self) <span style="color:#f92672">-&gt;</span> T:
+        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>_container<span style="color:#f92672">.</span>pop()
+</code></pre></div><p>Next we&rsquo;ll implement the turtle drawing.
+The one thing to keep in mind is that the turtle&rsquo;s home position (and the origin) is set in the middle of the screen.
+We&rsquo;ll use the <code>window_width()</code> and <code>window_height()</code> functions to translate the turtle before we start drawing.
+Also note that a heading of 0 corresponds to facing right (east).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">DIST <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
+ANGL <span style="color:#f92672">=</span> <span style="color:#ae81ff">25</span>
+START_A <span style="color:#f92672">=</span> <span style="color:#ae81ff">65</span> 
+START_X <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>(t<span style="color:#f92672">.</span>window_width() <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">100</span> 
+START_Y <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>t<span style="color:#f92672">.</span>window_height() <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">50</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw</span>(s: str) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+    <span style="color:#75715e"># Clear the screen, hide the turtle, and set the speed to</span>
+    <span style="color:#75715e"># the highest possible.</span>
+    t<span style="color:#f92672">.</span>clearscreen()
+    t<span style="color:#f92672">.</span>ht()
+    t<span style="color:#f92672">.</span>speed(<span style="color:#e6db74">&#39;fastest&#39;</span>)
+
+    <span style="color:#75715e"># Set the turtle&#39;s starting position and angle.</span>
+    t<span style="color:#f92672">.</span>up()
+    t<span style="color:#f92672">.</span>setpos(START_X, START_Y)
+    t<span style="color:#f92672">.</span>seth(START_A)
+    t<span style="color:#f92672">.</span>down()
+
+    <span style="color:#75715e"># Initialize the position stack.</span>
+    saved_positions: Stack <span style="color:#f92672">=</span> Stack()
+
+    <span style="color:#75715e"># Follow instructions in the string.</span>
+    <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> s:
+        <span style="color:#66d9ef">if</span> (c <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;F&#39;</span>):
+            t<span style="color:#f92672">.</span>fd(DIST)
+
+        <span style="color:#66d9ef">if</span> (c <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;+&#39;</span>):
+            t<span style="color:#f92672">.</span>seth(t<span style="color:#f92672">.</span>heading() <span style="color:#f92672">+</span> ANGL)
+
+        <span style="color:#66d9ef">if</span> (c <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;-&#39;</span>):
+            t<span style="color:#f92672">.</span>seth(t<span style="color:#f92672">.</span>heading() <span style="color:#f92672">-</span> ANGL)
+
+        <span style="color:#66d9ef">if</span> (c <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;[&#39;</span>):
+            saved_positions<span style="color:#f92672">.</span>push((t<span style="color:#f92672">.</span>xcor(), t<span style="color:#f92672">.</span>ycor(), t<span style="color:#f92672">.</span>heading()))
+
+        <span style="color:#66d9ef">if</span> (c <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;]&#39;</span>):
+            x, y, h <span style="color:#f92672">=</span> saved_positions<span style="color:#f92672">.</span>pop()
+            t<span style="color:#f92672">.</span>up()
+            t<span style="color:#f92672">.</span>setpos(x, y)
+            t<span style="color:#f92672">.</span>seth(h)
+            t<span style="color:#f92672">.</span>down()
+    
+    input()
+</code></pre></div><p>Let&rsquo;s see what our little turtle can do.
+We&rsquo;ll use an example for Lindenmeyer himself<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">axiom: str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;X&#39;</span>
+rules: dict[str, str] <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#39;X&#39;</span>: <span style="color:#e6db74">&#39;F+[[X]-X]-F[-FX]+X&#39;</span>,
+    <span style="color:#e6db74">&#39;F&#39;</span>: <span style="color:#e6db74">&#39;FF&#39;</span>,
+    <span style="color:#e6db74">&#39;+&#39;</span>: <span style="color:#e6db74">&#39;+&#39;</span>,
+    <span style="color:#e6db74">&#39;-&#39;</span>: <span style="color:#e6db74">&#39;-&#39;</span>,
+    <span style="color:#e6db74">&#39;[&#39;</span>: <span style="color:#e6db74">&#39;[&#39;</span>,
+    <span style="color:#e6db74">&#39;]&#39;</span>: <span style="color:#e6db74">&#39;]&#39;</span>
+    }
+
+draw(lsystem(axiom, rules, <span style="color:#ae81ff">6</span>))
+</code></pre></div><p>Running this code produces the quite beautiful output in Figure 1.</p>
+<p><figure>
+  <img src="/fern.png" alt="Barnsley fern">
+  <figcaption>Figure 1: Barnsley fern</figcaption>
+</figure>
+</p>
+<p>A very simple modification we can make is to have the branches be thinner and the trunk wider.
+To do this we store a width value along with the x, y, and heading of the turtle.
+We also define a width multiplier, which defines how much the width shrinks by each time we draw a subbranch.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START_W <span style="color:#f92672">=</span> <span style="color:#ae81ff">3.0</span>
+W_MUL <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.85</span>
+</code></pre></div><p>In the setup code of <code>draw</code> we add the initial width.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw</span>(s: str) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+    <span style="color:#f92672">...</span>
+    t<span style="color:#f92672">.</span>setpos(START_X, START_Y)
+    t<span style="color:#f92672">.</span>seth(START_A)
+    t<span style="color:#f92672">.</span>width(START_W)
+    <span style="color:#f92672">...</span>
+</code></pre></div><p>When we push the turtle&rsquo;s state we also push the width, as well as shrink it by the multiplier.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw</span>(s: str) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+    <span style="color:#f92672">...</span>
+    <span style="color:#66d9ef">if</span> (c <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;[&#39;</span>):
+        saved_positions<span style="color:#f92672">.</span>push((t<span style="color:#f92672">.</span>xcor(), t<span style="color:#f92672">.</span>ycor(), t<span style="color:#f92672">.</span>heading(), t<span style="color:#f92672">.</span>width()))
+        t<span style="color:#f92672">.</span>width(t<span style="color:#f92672">.</span>width <span style="color:#f92672">*</span> W_MUL)
+</code></pre></div><p>And when the pop back we restore the width.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">draw</span>(s: str) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+    <span style="color:#f92672">...</span>
+    <span style="color:#66d9ef">if</span> (c <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;]&#39;</span>):
+        x, y, h, w <span style="color:#f92672">=</span> saved_positions<span style="color:#f92672">.</span>pop()
+        t<span style="color:#f92672">.</span>up()
+        t<span style="color:#f92672">.</span>setpos(x, y)
+        t<span style="color:#f92672">.</span>seth(h)
+        t<span style="color:#f92672">.</span>width(w)
+        t<span style="color:#f92672">.</span>down()
+</code></pre></div><p>This produces the output in Figure 2.</p>
+<p><figure>
+  <img src="/fern2.png" alt="Barnsley fern with varying width">
+  <figcaption>Figure 2: Barnsley fern with varying width</figcaption>
+</figure>
+</p>
+<p>Of course, there&rsquo;s many more things one can do.
+For instance, we can implement a random element to our drawing, not always turning an exact amount or drawing a set length.
+Or, perhaps color information can be stored.
+Either directly in the string produced by the L-system or programmatically in a similar way we did with width.
+I leave implementing these ideas up to you.</p>
+<p>L-systems are not only good at generating plant-like structures, but all sorts of self-similar structures.
+This includes fractals.
+The ruleset below produces the famous Sierspinski triangle as can be seen in Figure 3.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">START_A <span style="color:#f92672">=</span> <span style="color:#ae81ff">60</span>
+START_W <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span>
+<span style="color:#f92672">...</span>
+axiom: str <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;FXF--FF--FF&#39;</span>
+rules: dict[str, str] <span style="color:#f92672">=</span> {
+    <span style="color:#e6db74">&#39;F&#39;</span>: <span style="color:#e6db74">&#39;FF&#39;</span>,
+    <span style="color:#e6db74">&#39;X&#39;</span>: <span style="color:#e6db74">&#39;--FXF++FXF++FXF--&#39;</span>,
+    <span style="color:#e6db74">&#39;+&#39;</span>: <span style="color:#e6db74">&#39;+&#39;</span>,
+    <span style="color:#e6db74">&#39;-&#39;</span>: <span style="color:#e6db74">&#39;-&#39;</span>
+    }
+
+draw(lsystem(axiom, rules, <span style="color:#ae81ff">6</span>))
+</code></pre></div><p><figure>
+  <img src="/sierp.png" alt="Sierspinski triangle">
+  <figcaption>Figure 3: Sierspinski triangle</figcaption>
+</figure>
+</p>
+<p>We&rsquo;ve only scratched the surface of L-systems.
+There&rsquo;s so much more they can do, from 3D implementations, to creating music and architecture, to creating robot morphologies.
+For more information you can take a look at the following excellent resources:</p>
+<ol>
+<li><a href="http://en.alife.pl/files/lsyst/d/js/lsystem.html">alife.pl</a> where you can play around with L-systems</li>
+<li><a href="https://www.youtube.com/watch?v=S1rNrD62Z7I">This lecture by Maciej Komosinski</a></li>
+<li><a href="http://www.cs.put.poznan.pl/mkomosinski/lectures/MK_ArtLife.pdf">Accompanying lecture notes</a></li>
+</ol>
+<p>You can download the source code here: <a href="/lsystem.py">lsystem.py</a></p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>Normally the identity rules (e.g. $[ \to [$ are left out, but it simplifies the code if we explicitly define them.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+
+</div>
+
+<div class="footer">
+    <a href="thorsell.xyz">thorsell.xyz</a>
+</div>
+
