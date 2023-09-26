@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Articles on Hannes&#39; Website</title>
-    <link>http://example.org/articles/</link>
+    <link>http://thorsell.xyz/articles/</link>
     <description>Recent content in Articles on Hannes&#39; Website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 Sep 2023 00:43:00 +0200</lastBuildDate><atom:link href="http://example.org/articles/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 25 Sep 2023 00:43:00 +0200</lastBuildDate><atom:link href="http://thorsell.xyz/articles/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>L-systems</title>
-      <link>http://example.org/articles/lsystem/</link>
+      <link>http://thorsell.xyz/articles/lsystem/</link>
       <pubDate>Mon, 25 Sep 2023 00:43:00 +0200</pubDate>
       
-      <guid>http://example.org/articles/lsystem/</guid>
+      <guid>http://thorsell.xyz/articles/lsystem/</guid>
       <description>An L-system (Lindenmeyer system) is a parallel rewriting system. We decide on an alphabet $V$, set of rewriting rules $P$, and a starting axiom $\omega$. Starting from the axiom we apply all rules simultaneously, rewriting the string, and producing the next iteration. This then repeats.
 For instance, if $V = { A, B }$, $\omega = { B }$, and $P = { A \to AA, B \to BA }$, then the first couple of iterations will look like:</description>
     </item>

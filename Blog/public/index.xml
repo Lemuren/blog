@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hannes&#39; Website</title>
-    <link>http://example.org/</link>
+    <link>http://thorsell.xyz/</link>
     <description>Recent content on Hannes&#39; Website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 Sep 2023 00:43:00 +0200</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 25 Sep 2023 00:43:00 +0200</lastBuildDate><atom:link href="http://thorsell.xyz/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>L-systems</title>
-      <link>http://example.org/articles/lsystem/</link>
+      <link>http://thorsell.xyz/articles/lsystem/</link>
       <pubDate>Mon, 25 Sep 2023 00:43:00 +0200</pubDate>
       
-      <guid>http://example.org/articles/lsystem/</guid>
+      <guid>http://thorsell.xyz/articles/lsystem/</guid>
       <description>An L-system (Lindenmeyer system) is a parallel rewriting system. We decide on an alphabet $V$, set of rewriting rules $P$, and a starting axiom $\omega$. Starting from the axiom we apply all rules simultaneously, rewriting the string, and producing the next iteration. This then repeats.
 For instance, if $V = { A, B }$, $\omega = { B }$, and $P = { A \to AA, B \to BA }$, then the first couple of iterations will look like:</description>
     </item>
     
     <item>
       <title>Personal File Naming Scheme(s)</title>
-      <link>http://example.org/posts/file-naming-scheme/</link>
+      <link>http://thorsell.xyz/posts/file-naming-scheme/</link>
       <pubDate>Sat, 23 Sep 2023 19:54:13 +0200</pubDate>
       
-      <guid>http://example.org/posts/file-naming-scheme/</guid>
+      <guid>http://thorsell.xyz/posts/file-naming-scheme/</guid>
       <description>To keep your filesystem from becoming a mess, I think it&amp;rsquo;s important to decide on a naming scheme to use for your files. This is very similar to using a style guide for formatting source code when programming. You decide on a set of rules, and stick to them. These rules can be as simple or complicated as you wish.
 There&amp;rsquo;s essentially only two considerations:
  How Linux interacts with names; for instance on the command line and when writing scripts.</description>
@@ -30,19 +30,19 @@ There&amp;rsquo;s essentially only two considerations:
     
     <item>
       <title>Everything-as-a-Service</title>
-      <link>http://example.org/posts/eaas/</link>
+      <link>http://thorsell.xyz/posts/eaas/</link>
       <pubDate>Mon, 18 Sep 2023 00:23:15 +0200</pubDate>
       
-      <guid>http://example.org/posts/eaas/</guid>
+      <guid>http://thorsell.xyz/posts/eaas/</guid>
       <description>You&amp;rsquo;ll own nothing and you&amp;rsquo;ll be happy. It seems everything is turning into a subscription service these days. Not only do we subscribe to more services than ever before, but more and more things that used to be one-time purchases are turning to subscription models. You can no longer buy licenses to use a piece of software; instead, you subscribe to a service which lets you use that piece of software.</description>
     </item>
     
     <item>
       <title>Unhooking From the Algorithm</title>
-      <link>http://example.org/posts/unhooking/</link>
+      <link>http://thorsell.xyz/posts/unhooking/</link>
       <pubDate>Thu, 14 Sep 2023 23:16:41 +0200</pubDate>
       
-      <guid>http://example.org/posts/unhooking/</guid>
+      <guid>http://thorsell.xyz/posts/unhooking/</guid>
       <description>A few years ago I got in the habit of writing custom stylesheets for websites I use often. I still think this is a good idea, but the better idea is simply to use the internet less. Eventually, I stopped doing this. Then, about a week ago, I remembered the existence of these types of custom CSS extensions, and decided to use one to tackle a problem I&amp;rsquo;ve had.
 I find myself sometimes falling into the fabled &amp;ldquo;YouTube rabbit-hole&amp;rdquo;.</description>
     </item>
