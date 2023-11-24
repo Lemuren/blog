@@ -118,9 +118,38 @@ ul {
     width: 100%;
 }
 
-
-
 .article-header {
     color: #F1F0EA;
 }
 
+
+/* Comment-section */
+#comment-section {
+    background-color: #34343F;
+    padding: 5px;
+    margin: 0 0 30px 0;
+    border-radius: 8px;
+}
+
+#comment-section ul {
+    padding-left: 0;
+}
+
+#comment-section li {
+    background-color: #56565F;
+    margin: 10px 10px 10px 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#comment-section h4 {
+    margin: 0;
+}
+
+#comment-section p {
+    font-size: 12pt;
+}
+
+#comment-section p.comment-date {
+    font-size: 10pt;
+}
