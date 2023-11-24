@@ -1,5 +1,5 @@
 function fetchComments() {
-    fetch('thorsell.xyz/api/comment')
+    fetch('api/comment')
         .then(response => response.text())
         .then(data => {
             document.getElementById('comment-section').innerHTML = data;
