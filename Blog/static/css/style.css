@@ -153,3 +153,12 @@ ul {
 #comment-section p.comment-date {
     font-size: 10pt;
 }
+
+/* Comment inut section */
+#input-name {
+    display: block;
+}
+
+#input-message {
+    display: block;
+}
