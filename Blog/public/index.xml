@@ -6,7 +6,16 @@
     <description>Recent content on Hannes&#39; Website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 Sep 2023 00:43:00 +0200</lastBuildDate><atom:link href="http://thorsell.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 22 Nov 2023 16:45:00 +0100</lastBuildDate><atom:link href="http://thorsell.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Beautiful Code Has Fewer Bugs</title>
+      <link>http://thorsell.xyz/posts/beautiful/</link>
+      <pubDate>Wed, 22 Nov 2023 16:45:00 +0100</pubDate>
+      
+      <guid>http://thorsell.xyz/posts/beautiful/</guid>
+      <description>One pattern I&amp;rsquo;ve noticed in software is that beautiful code often has fewer bugs than ugly code. Why should this be? Indeed, one can write code that is beautiful and code that is ugly that both compile down to the same instructions. We&amp;rsquo;re often also told that code aesthetics don&amp;rsquo;t matter, or at the very least, that people put too much emphasis on it. I think beautiful code matters for more reasons than the purely measurable, practical ones, but also I believe code aesthetics has an impact on the practical.</description>
+    </item>
+    
     <item>
       <title>L-systems</title>
       <link>http://thorsell.xyz/articles/lsystem/</link>
