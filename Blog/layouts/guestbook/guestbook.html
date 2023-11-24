@@ -13,8 +13,15 @@
               },
               body: 'name=' + name + '&' + 'comment=' + message,
             })
-              .then(response => response.text())
-              .then(data => console.log(data))
+                .then((response) => {
+                        if (response.ok) {
+                            alert('Message posted!')
+                            } else if (response.status == 400) {
+                                return response.text()
+                            }
+
+
+                }
               .catch(error => console.log(error));
     }
 </script>
