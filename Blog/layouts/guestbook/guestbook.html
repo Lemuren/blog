@@ -17,12 +17,9 @@
                         if (response.ok) {
                             alert('Message posted!')
                             } else if (response.status == 400) {
-                                return response.text()
+                                return response.text() .then(data => alert(data))
                             }
-
-
                 })
-                .then(data => console.log(data))
               .catch(error => console.log(error));
     }
 </script>
