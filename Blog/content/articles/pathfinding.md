@@ -331,7 +331,7 @@ To do this, we implement a Queue class with Deque as the backing data structure.
 We prefer deque here since it allows for efficient pushing of elements to the start (left) of the queue, while a list would require shuffling all the elements down by one.
 
 First we'll add deque at the top of `pathfinding.py`.
-``` { .python .breaklines }
+```python
 # pathfinding.py
 
 from collections import deque
@@ -464,7 +464,7 @@ We have to modify our Vertex class to support weighted edges.
 We do this by introducing a new named tuple, which consists of a vertex together with a weight.
 To work with named tuples we need to import the appropriate package.
 
-``` { .python .breaklines }
+```python
 # pathfinding.py
 
 from collections import namedtuple
@@ -474,7 +474,7 @@ Edge = namedtuple('Edge', ['vertex', 'weight'])
 
 We also change our Vertex class' `__init__` definition to use this new edge structure.
 
-``` { .python .breaklines }
+```python
 class Vertex:
     def __init__(self, edges: list[Edge], name: str) -> None:
         self.edges: list[Edge] = edges
@@ -487,7 +487,7 @@ We update the code where we define our graph to reflect the weighted graph above
 
 [^2]: Actually, the graph we will define is a weighted *directed* graph. But because we will use the same weight in both directions this will be equivalent to an undirected graph.
 
-``` { .python .breaklines }
+```python
 # examples.py
 
 # Create a graph of England.
@@ -539,7 +539,7 @@ graph: Graph = {derby, nottingham, birmingham, bristol, southhampton, coventry,
 
 We also have to import this new edge structure at the top of `examples.py`.
 
-``` { .python .breaklines }
+```python
 # examples.py
 
 from pathfinding import Edge
@@ -549,7 +549,7 @@ And we also change the DFS and BFS code to use this more general Vertex.
 They will simply ignore any weight information; treating a weighted graph as an unweighted one.
 To do this we just extract the neighboring vertex from each edge inside the for-loop and throw away any weight information.
 
-``` { .python .breaklines }
+```python
 # pathfinding.py
 
 # DFS
@@ -579,13 +579,13 @@ When popping elements the element with the *lowest* priority will be popped off 
 Of course, one can also implement a priority queue which pops off the highest priority elements.
 We'll store the element and priority as a tuple, so we need to import the type hints for tuples as well.
 
-``` { .python .breaklines }
+```python
 # pathfinding.py
 
 from typing import Tuple
 ```
 
-``` { .python .breaklines }
+```python
 # pathfinding.py
 
 class PriorityQueue(Generic[T]):
@@ -616,7 +616,7 @@ Our frontier will use a priority queue, where we keep track of nodes as well as 
 Normally in Dijkstra you would keep track of which vertices are in your frontier, and make sure to overrite the parent vertex as well as the total cost if you found a new path to that vertex with a lower cost.
 Because we are keeping nodes in our frontier, which have parent information baked-in, we don't have to do this.
 
-``` { .python .breaklines }
+```python
 # pathfinding.py
 
 # Dijkstra.
@@ -657,7 +657,7 @@ def dijkstra(graph: Graph, start: Vertex, goal: Vertex) -> Optional[Node]:
 
 We add some code to `examples.py` to run Dijkstra:
 
-``` { .python .breaklines }
+```python
 # examples.py
 from pathfinding import dijkstra
 
@@ -674,7 +674,7 @@ else:
 
 Running the code yields:
 
-``` { .python .breaklines }
+```python
 Testing Dijkstra.
 We start at London.
 We go to Northhampton.
