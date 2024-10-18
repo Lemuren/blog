@@ -75,7 +75,7 @@ It allows for cleaner, more robust Python code, and was introduced in Python 3.5
 
 To start with, we implement classes for vertices and nodes.
 
-```.python
+```python
 # pathfinding.py
 
 # We need this library to allow recursive type hinting in classes.
