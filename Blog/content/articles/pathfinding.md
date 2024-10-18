@@ -75,7 +75,7 @@ It allows for cleaner, more robust Python code, and was introduced in Python 3.5
 
 To start with, we implement classes for vertices and nodes.
 
-``` { .python }
+```.python
 # pathfinding.py
 
 # We need this library to allow recursive type hinting in classes.
@@ -116,7 +116,7 @@ It's also good practice to give your objects human-friendly string representatio
 Now that we've defined vertices and nodes, we can define what a graph is.
 This is simply our definition from the section above: a graph is a set of vertices.
 
-``` { .python }
+```python
 # pathfinding.py
 
 Graph = set[Vertex]
@@ -126,7 +126,7 @@ Python has no built-in stack structure in its standard library, so we implement 
 To make sure our stack will work regardless of its content we'll write it as a generic class.
 We define `T = TypeVar('T')` near the top of our file, just below the imports.
 
-``` { .python }
+```python
 # pathfinding.py
 
 class Stack(Generic[T]):
@@ -144,7 +144,7 @@ class Stack(Generic[T]):
 We can now implement our first algorithm: depth-first search.
 This algorithm will work with the graph structure we've defined.
 
-``` { .python }
+```python
 # pathfinding.py
 
 # DFS
@@ -189,7 +189,7 @@ At the end, we'll have a list of nodes from the start to the goal.
 We'll write another function to take this list and print human-readable output describing the path.
 Let's put these functions just below our class definitions.
 
-``` { .python }
+```python
 # pathfinding.py
 
 def construct_path(n: Node) -> list[Node]:
@@ -219,7 +219,7 @@ We now have to input the graph structure from the image above into our program.
 We'll do this in a separate file `examples.py`.
 The code to create the graph is not very interesting; we're just translating the image to a graph structure.
 
-``` { .python }
+```python
 # examples.py
 
 from pathfinding import Vertex, Node, Graph, construct_path, print_path, dfs
@@ -275,7 +275,7 @@ We're now ready to test our new algorithm.
 We'll pick London as our starting vertex and Oxford as our goal.
 Add the following to the bottom of the file, and run it:
 
-``` { .python }
+```python
 # examples.py
 
 ### Test Algorithms ###
@@ -290,7 +290,7 @@ else:
 
 This gives us the output:
 
-``` { .python }
+```python
 Testing DFS.
 We start at London.
 We go to Southhampton.
@@ -340,7 +340,7 @@ from Typing import Deque
 
 Then we'll define our Queue class, putting it just below our Stack class.
 
-``` { .python }
+```python
 #pathfinding.py
 
 class Queue(Generic[T]):
@@ -363,7 +363,7 @@ class Queue(Generic[T]):
 
 Now we copy the code from our DFS function, changing only the data structure from a stack to a queue, and we're done!
 
-``` { .python }
+```python
 # BFS.
 def bfs(graph: Graph, start: Vertex, goal: Vertex) -> Optional[Node]:
     if (start not in graph):
@@ -401,14 +401,14 @@ def bfs(graph: Graph, start: Vertex, goal: Vertex) -> Optional[Node]:
 Let's go back to `examples.py` and add in code to test our new algorithm.
 First we must import it.
 
-``` { .python }
+```python
 # examples.py
 from pathfinding import bfs
 ```
 
 Next we add the bit to run the algorithm, using the same graph as before.
 
-``` { .python }
+```python
 # examples.py
 
 print('Testing BFS.')
@@ -421,7 +421,7 @@ else:
 
 Running this gives us:
 
-``` { .python }
+```python
 Testing BFS.
 We start at London.
 We go to Intersection 5.
@@ -702,7 +702,7 @@ Dijkstra will run down towards the right, and keep going, until the total cost e
 
 Let's create this new graph in `examples.py` and try to run Dijkstra on it to see this.
 
-``` { .python }
+```python
 # examples.py
 
 # Construct a pernicious graph.
@@ -743,7 +743,7 @@ else:
 
 We also make sure to append this line to our implementation of Dijkstra in `pathfinding.py`, so that we can see which nodes the algorithm is considering:
 
-``` { .python }
+```python
 # pathfinding.py
 
 ...
@@ -757,7 +757,7 @@ def dijkstra(graph: Graph, start: Vertex, goal: Vertex) -> Optional[Node]:
 
 If we now run the code we'll see the following:
 
-``` { .python }
+```python
 Testing Dijkstra on Graph 2
 [(<pathfinding.Node object at 0x7efc42ec08b0>, 0)]
 [(<pathfinding.Node object at 0x7efc42ec0670>, 1)]
@@ -806,14 +806,14 @@ However, in our case it will be.
 
 We'll define the Heuristic type, making sure to put it below our class definition of Vertex:
 
-``` { .python }
+```python
 # pathfinding.py
 ...
 Heuristic = dict[tuple[Vertex, Vertex], float]
 ...
 ```
 
-``` { .python }
+```python
 # examples.py
 from pathfinding import Heuristic
 
@@ -835,7 +835,7 @@ heuristic[(J, A)] = heuristic[(J, H)] = 9
 Let's now actually implement A-star.
 We take Dijkstra as our base, and then all we need to do is modify the weight we pass to the frontier when pushing nodes onto it.
 
-``` { .python }
+```python
 def astar(graph: Graph, start: Vertex, goal: Vertex) -> Optional[Node]:
     if (start not in graph):
         print('Starting vertex not in graph!')
@@ -875,7 +875,7 @@ def astar(graph: Graph, start: Vertex, goal: Vertex) -> Optional[Node]:
 As you can see, only one line differs: the one where we add the heursitic cost to the new node in the priority queue.
 Let's try running A* on our new graph, and see how it performs.
 
-``` { .python }
+```python
 # examples.py
 from pathfinding import astar
 
@@ -892,7 +892,7 @@ else:
 
 This gives us the output:
 
-``` { .python }
+```python
 Testing A* on Graph 2
 [(<pathfinding.Node object at 0x7fb0d4865b40>, 0)]
 [(<pathfinding.Node object at 0x7fb0d4865570>, 2)]
