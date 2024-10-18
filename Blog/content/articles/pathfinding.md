@@ -1,4 +1,9 @@
-# A Foray into Path-finding Algorithms
+---
+title: "A Foray into Path-finding Algorithms"
+date: 2024-10-19T00:59:00+02:00
+description: "A description and implementation of various basic path-finding algorithms from first principles."
+draft: false
+---
 
 > A lot of the material of this post is based on the excellent book ["Classic Computer Science Problems in Python"](https://www.manning.com/books/classic-computer-science-problems-in-python) by David Kopec.
 
